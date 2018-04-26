@@ -1,8 +1,8 @@
 import boto3
 import os
 
-id_audio = "67"
-archivo_original = "doublebassSustentacion.wav"
+id_audio = "61"
+archivo_original = "Pink_Floyd.wav"
 
 numero_max_mensajes = 10
 cont = 0
