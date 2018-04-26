@@ -77,7 +77,9 @@ while cont<100000:
                     try:
                         mp3_file = msplit[0] + '.mp3'
                         wav_file = path_media+archivo_descarga
+                        print("wav_file: ", wav_file)
                         sound = pydub.AudioSegment.from_wav(wav_file)
+                        print("mp3_file: ", mp3_file)
                         sound.export(mp3_file, format= "mp3")
                         #os.remove(wav_file)
                         pref_bucket = 'media/' + mp3_file
