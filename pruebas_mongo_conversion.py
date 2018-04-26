@@ -69,7 +69,7 @@ for bucket in s3.buckets.all():
             print("Ocurrio un error en la DESCARGA del archivo")
 ######################################################################################################
 print("************************************************************************************")
-print("Prueba conversion")
+print("Prueba conversion ")
 print("************************************************************************************")
 archivo_descarga = "doublebassSustentacion.wav"
 msplit = archivo_descarga.split(".")
