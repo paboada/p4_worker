@@ -79,9 +79,10 @@ while cont<100000:
                         wav_file = path_media+archivo_descarga
                         print("wav_file: ", wav_file)
                         sound = pydub.AudioSegment.from_wav(wav_file)
-                        mp3_file = path_media + mp3_file
-                        print("mp3_file: ", mp3_file)
-                        sound.export(mp3_file, format= "mp3")
+                        mp3_file_path = path_media + mp3_file
+                        print("mp3_file: ", mp3_file_path)
+                        sound.export(mp3_file_path, format= "mp3")
+                        print("Termino conversion.........")
                         #os.remove(wav_file)
                         pref_bucket = 'media/' + mp3_file
                         print("Guardando archivo: ", mp3_file, " en S3" )
