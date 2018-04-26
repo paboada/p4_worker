@@ -33,7 +33,7 @@ url_queue=queue.url
 print("Conectado a la url: ", url_queue)
 
 #cliente
-s3_cliente = boto3.client('s3')
+s3_cliente = boto3.client('s3', aws_access_key_id=access_id, aws_secret_access_key=access_secret))
 
 #Create S3 client
 access_id=os.environ["S3_AWS_ACCESS_KEY_ID"]
