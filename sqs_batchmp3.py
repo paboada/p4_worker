@@ -32,12 +32,11 @@ queue = sqs.get_queue_by_name(QueueName='sqs_concursos')
 url_queue=queue.url
 print("Conectado a la url: ", url_queue)
 
-#cliente
-s3_cliente = boto3.client('s3', aws_access_key_id=access_id, aws_secret_access_key=access_secret)
 
 #Create S3 client
 access_id=os.environ["S3_AWS_ACCESS_KEY_ID"]
 access_secret=os.environ["S3_AWS_SECRET_ACCESS_KEY"]
+s3_cliente = boto3.client('s3', aws_access_key_id=access_id, aws_secret_access_key=access_secret)
 s3 = boto3.resource('s3', aws_access_key_id=access_id, aws_secret_access_key=access_secret)
 bucket = s3.Bucket('media-supervoices')
 nombre_bucket = 'media-supervoices'

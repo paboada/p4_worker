@@ -12,9 +12,10 @@ import pprint
 path_media = '/app/'
 archivo_descarga = "doublebassSustentacion.wav"
 
-s3_cliente = boto3.client('s3', aws_access_key_id=access_id, aws_secret_access_key=access_secret)
+
 access_id=os.environ["S3_AWS_ACCESS_KEY_ID"]
 access_secret=os.environ["S3_AWS_SECRET_ACCESS_KEY"]
+s3_cliente = boto3.client('s3', aws_access_key_id=access_id, aws_secret_access_key=access_secret)
 s3 = boto3.resource('s3', aws_access_key_id=access_id, aws_secret_access_key=access_secret)
 bucket = s3.Bucket('media-supervoices')
 nombre_bucket = 'media-supervoices'
