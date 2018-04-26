@@ -1,1 +1,1 @@
-worker: python sqs_batchmp3.py
+worker: python sqs_batchmp3_prd.py
