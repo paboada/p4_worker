@@ -75,16 +75,16 @@ while cont<100000:
                     print("Convirtiendo de WAV a MP3..........")
                     try:
                         mp3_file = msplit[0] + '.mp3'
-                        wav_file = path_media+archivo_descarga
+                        wav_file = path_media + archivo_descarga
                         print("wav_file: ", wav_file)
                         sound = pydub.AudioSegment.from_wav(wav_file)
                         mp3_file_path = path_media + mp3_file
                         print("mp3_file: ", mp3_file_path)
                         sound.export(mp3_file_path, format= "mp3")
                         print("Termino conversion.........")
-                        #os.remove(wav_file)
-                        pref_bucket = 'media/' + mp3_file
+                        os.remove(wav_file)
                         print("Guardando archivo: ", mp3_file, " en S3" )
+                        pref_bucket = 'media/' + mp3_file
                         s3_cliente.upload_file(mp3_file, nombre_bucket, pref_bucket)
                         os.remove(mp3_file)
                         message.delete()

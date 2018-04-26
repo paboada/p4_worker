@@ -36,7 +36,9 @@ if msplit[1]=='wav':
         print("mp3_file: ", mp3_file_path)
         sound.export(mp3_file_path, format= "mp3")
         print("Termino conversion.........")
+        os.remove(wav_file)
         print("Guardando archivo: ", mp3_file, " en S3" )
+        pref_bucket = 'media/' + mp3_file
         s3_cliente.upload_file(mp3_file, nombre_bucket, pref_bucket)
         ok=1
     except:
