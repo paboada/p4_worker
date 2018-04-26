@@ -1,6 +1,9 @@
+print("****************************************************************************************************************************")
+print("Este es el script produccion para descargar archivo, convertirlo, guardar el mp3 en S3, cambiar estado en base de datos,etc")
+print("****************************************************************************************************************************")
+
 import boto3
 import botocore
-
 import os
 import pydub
 import glob

@@ -1,3 +1,7 @@
+print("************************************************************************************")
+print("Este es un script para probar conversion archivo a mp3 y guardarlo en S3")
+print("************************************************************************************")
+
 import boto3
 import botocore
 import os
