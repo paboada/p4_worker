@@ -135,11 +135,17 @@ while cont<100000:
                 print("Imprimiento cursor")
                 print("Documento Mongo encontrado para : ",  doc["archivo_original"])
                 db.WebConcursos_audiolocutor.find_one_and_update({ "id": int(id_audio_cambiar) }, { "$set": { "archivo_convertido": mp3_file , "estado": "Convertido" }})
+
+
+
+
             print("Inicia el envio de correo de notificacion..........")
             cursor = db.WebConcursos_audiolocutor.find({"id": int(id_audio_cambiar) },{"email":1, "_id":0})
             for doc in cursor:
                 print("Se enviara correo a: ")
                 print(doc["email"])
+                print("email_host: ", email_host)
+                print("email_host: ", email_port)
                 smtp = smtplib.SMTP(email_host, email_port)
                 remitente = 'supervoices.cloud@gmail.com'
                 destinatario = doc["email"]
@@ -149,6 +155,7 @@ while cont<100000:
                 smtp.starttls()
                 smtp.ehlo()
                 try:
+                    print("Login para correo con usuario y pass de AWS")
                     smtp.login(email_user, email_pass)
                     print("Enviando correo............")
                     smtp.sendmail(remitente, destinatario, email)
