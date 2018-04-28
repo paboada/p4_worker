@@ -11,5 +11,7 @@ boto="3"
 pydub="*"
 pymongo="*"
 
+sendgrid="*"
+
 [requires]
 python_version = "3.6.4"
