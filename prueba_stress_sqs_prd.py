@@ -1,8 +1,8 @@
 import boto3
 import os
 
-id_audio = "61"
-archivo_original = "Pink_Floyd.wav"
+id_audio = "72"
+archivo_original = "a_algo_2.wav"
 
 print("¿Digite el numero de mensajes del archivo Pink_Floyd.wav que quiere enviar a la cola?")
 numero_max_mensajes = int(input())
