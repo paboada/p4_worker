@@ -186,7 +186,7 @@ while cont<100000:
                 email_from="supervoices.cloud@gmail.com"
                 email_to=doc["email"]
                 email_subject="Aviso FALLA!!!! de procesamiento de audio"
-                email_content="Hola! Te informamos que tu archivo de audio " + mp3_file + " a tenido problemas en el proceso"
+                email_content="Hola! Te informamos que tu archivo de audio a tenido problemas en el proceso"
                 sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
                 data = {
                   "personalizations": [
