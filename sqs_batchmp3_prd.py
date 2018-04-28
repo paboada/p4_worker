@@ -177,37 +177,39 @@ while cont<100000:
                  print(response.status_code)
                  print("Termina envio de correo de notificacion")
         else:
-            print("Se enviara correo a: ")
-            print(doc["email"])
-            email_from="supervoices.cloud@gmail.com"
-            email_to=doc["email"]
-            email_subject="Aviso FALLA!!!! de procesamiento de audio"
-            email_content="Hola! Te informamos que tu archivo de audio " + mp3_file + " a tenido problemas en el proceso"
-            sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
-            data = {
-              "personalizations": [
-                {
-                  "to": [
+            cursor = db.WebConcursos_audiolocutor.find({"id": int(id_audio_cambiar) },{"email":1, "_id":0})
+            for doc in cursor:
+                print("Se enviara correo de falla a: ")
+                print(doc["email"])
+                email_from="supervoices.cloud@gmail.com"
+                email_to=doc["email"]
+                email_subject="Aviso FALLA!!!! de procesamiento de audio"
+                email_content="Hola! Te informamos que tu archivo de audio " + mp3_file + " a tenido problemas en el proceso"
+                sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
+                data = {
+                  "personalizations": [
                     {
-                      "email": email_to
+                      "to": [
+                        {
+                          "email": email_to
+                        }
+                      ],
+                      "subject": email_subject
                     }
                   ],
-                  "subject": email_subject
+                  "from": {
+                    "email": email_from
+                  },
+                  "content": [
+                    {
+                      "type": "text/plain",
+                      "value": email_content
+                    }
+                  ]
                 }
-              ],
-              "from": {
-                "email": email_from
-              },
-              "content": [
-                {
-                  "type": "text/plain",
-                  "value": email_content
-                }
-              ]
-            }
-            response = sg.client.mail.send.post(request_body=data)
-            print(response.status_code)
-            print("Termina envio de correo de notificacion")
+                response = sg.client.mail.send.post(request_body=data)
+                print(response.status_code)
+                print("Termina envio de correo de notificacion")
 
 #########################################################################################################################
 #########################################################################################################################
