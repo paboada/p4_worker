@@ -177,6 +177,7 @@ while cont<100000:
                  print(response.status_code)
                  print("Termina envio de correo de notificacion")
         else:
+            db = client.concursos
             cursor = db.WebConcursos_audiolocutor.find({"id": int(id_audio_cambiar) },{"email":1, "_id":0})
             for doc in cursor:
                 print("Se enviara correo de falla a: ")
