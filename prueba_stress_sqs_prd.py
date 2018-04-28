@@ -27,5 +27,5 @@ while cont < numero_max_mensajes:
                                                                     'DataType': 'String'
                                                                     }
                                                     })
-    print("Mensaje: ", cont, "creado")
+    print("Mensaje: ", cont+1, "creado")
     cont = cont+1
