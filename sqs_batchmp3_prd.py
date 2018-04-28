@@ -51,6 +51,7 @@ nombre_bucket = 'media-supervoices'
 cont = 0
 #while True:
 while cont<100000:
+    ok=0
     print("secuencia:", cont+1)
     messages = queue.receive_messages(QueueUrl=url_queue, AttributeNames=['All'], MessageAttributeNames=['All'], MaxNumberOfMessages=10) # adjust MaxNumberOfMessages if needed
     print("Mensajes encontrados: " , len(messages))
@@ -175,8 +176,40 @@ while cont<100000:
                  response = sg.client.mail.send.post(request_body=data)
                  print(response.status_code)
                  print("Termina envio de correo de notificacion")
+        else:
+            print("Se enviara correo a: ")
+            print(doc["email"])
+            email_from="supervoices.cloud@gmail.com"
+            email_to=doc["email"]
+            email_subject="Aviso FALLA!!!! de procesamiento de audio"
+            email_content="Hola! Te informamos que tu archivo de audio " + mp3_file + " a tenido problemas en el proceso"
+            sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
+            data = {
+              "personalizations": [
+                {
+                  "to": [
+                    {
+                      "email": email_to
+                    }
+                  ],
+                  "subject": email_subject
+                }
+              ],
+              "from": {
+                "email": email_from
+              },
+              "content": [
+                {
+                  "type": "text/plain",
+                  "value": email_content
+                }
+              ]
+            }
+            response = sg.client.mail.send.post(request_body=data)
+            print(response.status_code)
+            print("Termina envio de correo de notificacion")
+
 #########################################################################################################################
-#Este bloque es usado si quiero usar el envio de correo a traves de sendgrid , add on de Heroku
 #########################################################################################################################
 
 
