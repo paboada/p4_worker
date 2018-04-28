@@ -177,6 +177,7 @@ while cont<100000:
                  print(response.status_code)
                  print("Termina envio de correo de notificacion")
         else:
+            client = MongoClient(db_mongo) #La direccion ip publica del servidor ec2 IPv4 Public IP
             db = client.concursos
             cursor = db.WebConcursos_audiolocutor.find({"id": int(id_audio_cambiar) },{"email":1, "_id":0})
             for doc in cursor:
