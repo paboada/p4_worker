@@ -18,9 +18,7 @@ path_media = '/app/'
 print("Inicio de la Ejecucion de batchMP3.py adaptado para sqs")
 print(time.strftime("%d/%m/%y %H:%M:%S"))
 
-f=open("log_batch.txt","w")
-f.write("Inicio de la Ejecucion de batchMP3.py adaptado para sqs")
-f.write(time.strftime("%d/%m/%y %H:%M:%S"))
+
 
 email_host=os.environ["SES_EMAIL_HOST"]
 email_port=os.environ["SES_EMAIL_PORT"]
@@ -56,9 +54,6 @@ while cont<100000:
     print("secuencia:", cont+1)
     messages = queue.receive_messages(QueueUrl=url_queue, AttributeNames=['All'], MessageAttributeNames=['All'], MaxNumberOfMessages=10) # adjust MaxNumberOfMessages if needed
     print("Mensajes encontrados: " , len(messages))
-    f.write("Buscando Mensajes")
-    f.write(time.strftime("%d/%m/%y %H:%M:%S"))
-    f.close()
     for message in messages: # 'Messages' is a list
     # process the messages
         print("Mensaje encontrando en SQS del archivo: ", (message.message_attributes['archivo_original']['StringValue']))
