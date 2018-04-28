@@ -12,6 +12,7 @@ import smtplib
 import time
 from pymongo import MongoClient
 import pprint
+import sendgrid
 
 print("Inicio de la Ejecucion de batchMP3.py adaptado para sqs")
 print(time.strftime("%d/%m/%y %H:%M:%S"))
@@ -135,36 +136,80 @@ while cont<100000:
                 print("Imprimiento cursor")
                 print("Documento Mongo encontrado para : ",  doc["archivo_original"])
                 db.WebConcursos_audiolocutor.find_one_and_update({ "id": int(id_audio_cambiar) }, { "$set": { "archivo_convertido": mp3_file , "estado": "Convertido" }})
-
-
-
-
-            print("Inicia el envio de correo de notificacion..........")
+#########################################################################################################################
+#Este bloque es usado si quiero usar el envio de correo a traves de sendgrid , add on de Heroku
+#########################################################################################################################
+            print("Inicia el envio de correo de notificacion a traves de add on de Heroku..........")
             cursor = db.WebConcursos_audiolocutor.find({"id": int(id_audio_cambiar) },{"email":1, "_id":0})
             for doc in cursor:
-                print("Se enviara correo a: ")
-                print(doc["email"])
-                print("email_host: ", email_host)
-                print("email_host: ", email_port)
-                smtp = smtplib.SMTP(email_host, email_port)
-                remitente = 'supervoices.cloud@gmail.com'
-                destinatario = doc["email"]
-                asunto = "Aviso de procesamiento de audio"
-                encabezado = "From: %s\r\nTo: %s\r\nSubject: %s\r\n\r\n" % (remitente, destinatario,asunto)
-                email = encabezado + "Hola! Te informamos que tu archivo de audio " + mp3_file + " a sido procesado con exito! "
-                smtp.starttls()
-                smtp.ehlo()
-                try:
-                    print("Login para correo con usuario y pass de AWS")
-                    smtp.login(email_user, email_pass)
-                    print("Enviando correo............")
-                    smtp.sendmail(remitente, destinatario, email)
-                    smtp.close()
-                    print("Finalizado............")
-                except smtplib.SMTPAuthenticationError as e:
-                    print(e.SMTPAuthenticationError)
-        else:
-            print("No se cambia estado en base de datos ni se envia correo")
+                 print("Se enviara correo a: ")
+                 print(doc["email"])
+                 email_from="supervoices.cloud@gmail.com"
+                 email_to=doc["email"]
+                 email_subject="Aviso de procesamiento de audio terminado"
+                 email_content="Hola! Te informamos que tu archivo de audio " + mp3_file + " a sido procesado con exito!"
+                 sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
+                 data = {
+                   "personalizations": [
+                     {
+                       "to": [
+                         {
+                           "email": email_to
+                         }
+                       ],
+                       "subject": email_subject
+                     }
+                   ],
+                   "from": {
+                     "email": email_from
+                   },
+                   "content": [
+                     {
+                       "type": "text/plain",
+                       "value": email_content
+                     }
+                   ]
+                 }
+                 response = sg.client.mail.send.post(request_body=data)
+                 print(response.status_code)
+                 print("Termina envio de correo de notificacion")
+#########################################################################################################################
+#Este bloque es usado si quiero usar el envio de correo a traves de sendgrid , add on de Heroku
+#########################################################################################################################
+
+
+#########################################################################################################################
+#Este bloque es usado si quiero usar el envio de correo a traves de SES de aws
+#########################################################################################################################
+#            print("Inicia el envio de correo de notificacion..........")
+#            cursor = db.WebConcursos_audiolocutor.find({"id": int(id_audio_cambiar) },{"email":1, "_id":0})
+#            for doc in cursor:
+#                print("Se enviara correo a: ")
+#                print(doc["email"])
+#                print("email_host: ", email_host)
+#                print("email_host: ", email_port)
+#                smtp = smtplib.SMTP(email_host, email_port)
+#                remitente = 'supervoices.cloud@gmail.com'
+#                destinatario = doc["email"]
+#                asunto = "Aviso de procesamiento de audio"
+#                encabezado = "From: %s\r\nTo: %s\r\nSubject: %s\r\n\r\n" % (remitente, destinatario,asunto)
+#                email = encabezado + "Hola! Te informamos que tu archivo de audio " + mp3_file + " a sido procesado con exito! "
+#                smtp.starttls()
+#                smtp.ehlo()
+#                try:
+#                    print("Login para correo con usuario y pass de AWS")
+#                    smtp.login(email_user, email_pass)
+#                    print("Enviando correo............")
+#                    smtp.sendmail(remitente, destinatario, email)
+#                    smtp.close()
+#                    print("Finalizado............")
+#                except smtplib.SMTPAuthenticationError as e:
+#                    print(e.SMTPAuthenticationError)
+#        else:
+#            print("No se cambia estado en base de datos ni se envia correo")
+#########################################################################################################################
+#Este bloque es usado si quiero usar el envio de correo a traves de SES de aws
+#########################################################################################################################
         print("************************************************************************************")
     cont=cont+1
     time.sleep(5)

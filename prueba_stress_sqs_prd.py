@@ -4,7 +4,9 @@ import os
 id_audio = "61"
 archivo_original = "Pink_Floyd.wav"
 
-numero_max_mensajes = 10
+print("¿Digite el numero de mensajes del archivo Pink_Floyd.wav que quiere enviar a la cola?")
+numero_max_mensajes = input()
+print("Se enviaran ", numero_max_mensajes, " mensajes a la cola")
 cont = 0
 # Create SQS client
 access_id=os.environ["S3_AWS_ACCESS_KEY_ID"]
