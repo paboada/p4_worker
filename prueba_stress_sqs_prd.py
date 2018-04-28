@@ -5,7 +5,7 @@ id_audio = "61"
 archivo_original = "Pink_Floyd.wav"
 
 print("¿Digite el numero de mensajes del archivo Pink_Floyd.wav que quiere enviar a la cola?")
-numero_max_mensajes = input()
+numero_max_mensajes = int(input())
 print("Se enviaran ", numero_max_mensajes, " mensajes a la cola")
 cont = 0
 # Create SQS client
