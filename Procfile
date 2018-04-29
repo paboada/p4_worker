@@ -1,1 +1,1 @@
-worker: newrelic-admin run-program python sqs_batchmp3_prd.py
+worker: newrelic-admin run-python sqs_batchmp3_prd.py
