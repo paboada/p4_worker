@@ -15,6 +15,8 @@ import pprint
 import sendgrid
 import newrelic.agent
 
+@newrelic.agent.background_task()
+
 path_media = '/app/'
 print("Inicio de la Ejecucion de batchMP3.py adaptado para sqs")
 print(time.strftime("%d/%m/%y %H:%M:%S"))
