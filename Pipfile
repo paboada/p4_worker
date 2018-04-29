@@ -12,6 +12,7 @@ pydub="*"
 pymongo="*"
 
 sendgrid="*"
+newrelic="*"
 
 [requires]
 python_version = "3.6.4"
