@@ -13,6 +13,7 @@ import time
 from pymongo import MongoClient
 import pprint
 import sendgrid
+import newrelic.agent
 
 path_media = '/app/'
 print("Inicio de la Ejecucion de batchMP3.py adaptado para sqs")
